@@ -72,7 +72,7 @@ a:hover {
 a:active {
   color: var(--link-active);
 }
-label {
+ul label {
   align-items: center;
   gap: 0.5rem;
   display: flex;
@@ -170,18 +170,11 @@ progress {
 progress:first-child {
   margin-top: 0;
 }
-progress:lsat-child {
+progress:last-child {
   margin-bottom: 0;
 }
 .error {
   color: red;
-}
-code {
-  background: var(--bg-2);
-  font-family: var(--font-mono);
-  border-radius: var(--border-radius);
-  padding: 0.15rem 0.3rem;
-  font-size: 0.9em;
 }
 ul.todos {
   padding: 0;
@@ -240,20 +233,15 @@ ul.todos button:hover {
   opacity: 1;
 }
 
-.centered {
-  max-width: 60em;
-  margin: 0 auto;
-}
-
 label {
   width: 100%;
 }
 
 input, span, a {
-  flex: 1;
+  flex: 1 0;
 }
 
-button {
+button.remove {
   border: none;
   background: url(./remove.svg) no-repeat 50% 50%;
   background-size: 1rem 1rem;
@@ -264,7 +252,11 @@ button {
   transition: opacity 0.2s;
 }
 
-button:hover {
+button.remove:hover {
   opacity: 1;
 }
 
+.centered {
+  max-width: 60em;
+  margin: 0 auto;
+}

@@ -1,12 +1,9 @@
 <script lang="ts">
-  import './app.css';
-
   import { enhance } from '$app/forms';
   import { fly, slide } from 'svelte/transition';
-  import type { Bracket } from '$lib/types';
 
   interface IProps {
-    data: { brackets: Array<Bracket> };
+    data: any;
     form: any;
   }
 
@@ -14,25 +11,30 @@
 </script>
 
 <div class="centered">
-  <h1>brackets</h1>
+  <h1>bracket {data.bracket.name}</h1>
 
   {#if form?.error}
     <p class="error">{form.error}</p>
   {/if}
 
+  {#if data.competitors.length > 1}
+    <a href="/bracket/{data.bracket.id}/match">go to match</a>
+  {/if}
+
   <form method="post" action="?/create" use:enhance>
     <label>
-      add a bracket:
+      add a competitor:
       <input name="name" value={form?.name ?? ''} autocomplete="off" required />
     </label>
   </form>
 
   <ul class="brackets">
-    {#each data.brackets as bracket (bracket.id)}
+    {#each data.competitors as competitor (competitor.id)}
       <li in:fly={{ y: 20 }} out:slide>
         <form method="post" action="?/delete" use:enhance>
-          <input type="hidden" name="id" value={bracket.id} />
-          <a href="/bracket/{bracket.id}">{bracket.name}</a>
+          <input type="hidden" name="id" value={competitor.id} />
+          <span>{competitor.name}</span>
+          <span>{competitor.elo}</span>
           <button class="remove" aria-label="Delete"></button>
         </form>
       </li>

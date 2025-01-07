@@ -1,33 +1,34 @@
 import { fail } from '@sveltejs/kit';
 import * as db from '$lib/server/database.js';
+import type { PageServerLoad, RequestEvent } from './$types';
 
-export function load({ cookies }) {
-  let id = cookies.get('userid');
+export const load: PageServerLoad = async () => {
+  // let id = cookies.get('userid');
 
-  if (!id) {
-    id = crypto.randomUUID();
-    cookies.set('userid', id, { path: '/' });
-  }
+  // if (!id) {
+  //   id = crypto.randomUUID();
+  //   cookies.set('userid', id, { path: '/' });
+  // }
 
   return {
-    brackets: db.getBrackets(id)
+    brackets: await db.getBrackets()
   };
 }
 
 export const actions = {
-  create: async ({cookies, request}) => {
+  create: async ({ request }: RequestEvent) => {
     const data = await request.formData();
     try {
-      db.createBracket(cookies.get('userid'), data.get('name'));
-    } catch (err) {
+      await db.createBracket(data.get('name')!.toString());
+    } catch (err: any) {
       return fail(422, {
         name: data.get('name'),
         error: err.message,
       });
     }
   },
-  delete: async ({cookies, request}) => {
+  delete: async ({ request }: RequestEvent) => {
     const data = await request.formData();
-    db.deleteBracket(cookies.get('userid'), data.get('id'));
+    await db.deleteBracket(parseInt(data.get('id')!.toString()));
   },
 };
