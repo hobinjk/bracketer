@@ -14,16 +14,16 @@ export const brackets = sqliteTable('brackets', {
 
 export const competitors = sqliteTable('competitors', {
   id: t.int().primaryKey({ autoIncrement: true }),
-  bracketId: t.int().references(() => brackets.id),
+  bracketId: t.int().references(() => brackets.id).notNull(),
   name: t.text().notNull(),
   elo: t.real().notNull(),
 });
 
 export const results = sqliteTable('results', {
   id: t.int().primaryKey({ autoIncrement: true }),
-  bracketId: t.int().references(() => brackets.id),
-  competitorAId: t.int().references(() => competitors.id),
-  competitorBId: t.int().references(() => competitors.id),
+  bracketId: t.int().references(() => brackets.id).notNull(),
+  competitorAId: t.int().references(() => competitors.id).notNull(),
+  competitorBId: t.int().references(() => competitors.id).notNull(),
   outcome: t.text({
     enum: [Outcome.WIN_A, Outcome.WIN_B, Outcome.DRAW],
   }).notNull(),

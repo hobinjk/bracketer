@@ -1,0 +1,186 @@
+{
+  "version": "6",
+  "dialect": "sqlite",
+  "id": "8bf4c9bc-16a8-4d04-864a-2dbdded66eeb",
+  "prevId": "e53bb6ea-d105-4649-897f-9e0256c5e533",
+  "tables": {
+    "brackets": {
+      "name": "brackets",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "integer",
+          "primaryKey": true,
+          "notNull": true,
+          "autoincrement": true
+        },
+        "name": {
+          "name": "name",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "checkConstraints": {}
+    },
+    "competitors": {
+      "name": "competitors",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "integer",
+          "primaryKey": true,
+          "notNull": true,
+          "autoincrement": true
+        },
+        "bracketId": {
+          "name": "bracketId",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "name": {
+          "name": "name",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "elo": {
+          "name": "elo",
+          "type": "real",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "competitors_bracketId_brackets_id_fk": {
+          "name": "competitors_bracketId_brackets_id_fk",
+          "tableFrom": "competitors",
+          "tableTo": "brackets",
+          "columnsFrom": [
+            "bracketId"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "checkConstraints": {}
+    },
+    "results": {
+      "name": "results",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "integer",
+          "primaryKey": true,
+          "notNull": true,
+          "autoincrement": true
+        },
+        "bracketId": {
+          "name": "bracketId",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "competitorAId": {
+          "name": "competitorAId",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "competitorBId": {
+          "name": "competitorBId",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "outcome": {
+          "name": "outcome",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "notes": {
+          "name": "notes",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "results_bracketId_brackets_id_fk": {
+          "name": "results_bracketId_brackets_id_fk",
+          "tableFrom": "results",
+          "tableTo": "brackets",
+          "columnsFrom": [
+            "bracketId"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        },
+        "results_competitorAId_competitors_id_fk": {
+          "name": "results_competitorAId_competitors_id_fk",
+          "tableFrom": "results",
+          "tableTo": "competitors",
+          "columnsFrom": [
+            "competitorAId"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        },
+        "results_competitorBId_competitors_id_fk": {
+          "name": "results_competitorBId_competitors_id_fk",
+          "tableFrom": "results",
+          "tableTo": "competitors",
+          "columnsFrom": [
+            "competitorBId"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "checkConstraints": {}
+    }
+  },
+  "views": {},
+  "enums": {},
+  "_meta": {
+    "schemas": {},
+    "tables": {},
+    "columns": {}
+  },
+  "internal": {
+    "indexes": {}
+  }
+}
