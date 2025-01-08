@@ -134,6 +134,7 @@ form {
   align-items: baseline;
   gap: 1rem;
   display: flex;
+  flex: 1;
 }
 ul:has(li):has(form) {
   padding: 0;
