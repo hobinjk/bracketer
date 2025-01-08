@@ -1,6 +1,7 @@
 <script lang="ts">
   import { enhance } from '$app/forms';
   import { fly, slide } from 'svelte/transition';
+  import Result from './Result.svelte';
 
   interface IProps {
     data: any;
@@ -28,7 +29,8 @@
     </label>
   </form>
 
-  <ul class="brackets">
+  <h2>Competitors</h2>
+  <ul class="competitors">
     {#each data.competitors as competitor (competitor.id)}
       <li in:fly={{ y: 20 }} out:slide>
         <form method="post" action="?/delete" use:enhance>
@@ -40,4 +42,25 @@
       </li>
     {/each}
   </ul>
+  <h2>Results</h2>
+  <ul>
+    {#each data.results as result}
+      <li in:fly={{ y: 20 }} out:slide>
+        <Result {result} />
+      </li>
+    {/each}
+  </ul>
 </div>
+
+<style>
+  ul {
+    padding: 0;
+    list-style: none;
+  }
+  li {
+    display: flex;
+    flex-direction: row;
+    gap: 0.5rem;
+    margin: 0.5rem 0;
+  }
+</style>

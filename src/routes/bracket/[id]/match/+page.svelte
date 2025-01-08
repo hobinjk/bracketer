@@ -19,20 +19,26 @@
     <input type="hidden" name="competitorAId" value={data.competitorA.id} />
     <input type="hidden" name="competitorBId" value={data.competitorB.id} />
 
-    <div style="flex: 1">
+    <label for="win-a">
       <input type="radio" id="win-a" name="outcome" value="WIN_A" required />
-      <label for="win-a">{data.competitorA?.name} Win</label>
-    </div>
-    <div style="flex: 1">
+      {data.competitorA?.name} Win
+    </label>
+    <label for="draw">
       <input type="radio" id="draw" name="outcome" value="DRAW" />
-      <label for="draw">Tie</label>
-    </div>
-    <div style="flex: 1">
+      Tie
+    </label>
+    <label for="win-b">
       <input type="radio" id="win-b" name="outcome" value="WIN_B" />
-      <label for="win-b">{data.competitorB?.name} Win</label>
-    </div>
+      {data.competitorB?.name} Win
+    </label>
 
     <textarea name="notes" placeholder="Notes" value={form?.notes ?? ''}></textarea>
     <button>Submit</button>
   </form>
 </div>
+
+<style>
+  label {
+    flex: 1;
+  }
+</style>

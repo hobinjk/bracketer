@@ -12,6 +12,10 @@ export const load: PageServerLoad = async ({ params }) => {
 
   const competitors = await db.getCompetitors(bracketId);
   const results = await db.getResults(bracketId);
+  for (let result of results) {
+    (result as any).competitorA = await db.getCompetitor(result.competitorAId!);
+    (result as any).competitorB = await db.getCompetitor(result.competitorBId!);
+  }
 
   return {
     bracket,
