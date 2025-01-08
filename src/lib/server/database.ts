@@ -66,6 +66,31 @@ export async function getBracket(bracketId: number) {
 
   return bracket;
 }
+interface IValued<T> {
+  value: number,
+  competitor: T,
+}
+function randomChoiceWeighted<T>(valuedMap: { [id: string]: IValued<T> }): T {
+  let values = Object.values(valuedMap);
+  let totalValue = 0;
+  let maxValue = 0;
+  for (const v of values) {
+    maxValue = Math.max(maxValue, v.value);
+  }
+  for (const v of values) {
+    v.value = (maxValue - v.value) + 1;
+    totalValue += v.value;
+  }
+
+  let choice = Math.random() * totalValue;
+  for (const v of values) {
+    if (choice <= v.value) {
+      return v.competitor;
+    }
+    choice -= v.value;
+  }
+  return values[0].competitor;
+}
 
 export async function getNewMatch(bracketId: number) {
   let competitors = await getCompetitors(bracketId);
@@ -74,9 +99,49 @@ export async function getNewMatch(bracketId: number) {
     throw new Error('too few competitors');
   }
 
+  let results = await getResults(bracketId);
+
+  interface IValuedCompetitor {
+    competitor: any,
+    value: number,
+  }
+
+  let valued: { [compId: string]: IValuedCompetitor } = {};
+  for (const competitor of competitors) {
+    valued[competitor.id] = {
+      competitor,
+      value: 0,
+    };
+  }
+
+  for (let result of results) {
+    valued[result.competitorAId].value += 1;
+    valued[result.competitorBId].value += 1;
+  }
+
+  // first is random sorted by amount of involved results
+  let competitorA = randomChoiceWeighted(valued);
+
+  for (let key of Object.keys(valued)) {
+    valued[key].value = 0;
+  }
+  delete valued[competitorA.id];
+
+  for (let result of results) {
+    if (result.competitorAId == competitorA.id) {
+      // Increase goodness of other
+      valued[result.competitorBId].value += 1;
+    } else if (result.competitorBId == competitorA.id) {
+      valued[result.competitorAId].value += 1;
+    }
+  }
+
+  // second is random sorted by amount of both-involved results
+  let competitorB = randomChoiceWeighted(valued);
+
   return {
-    competitorA: competitors[0],
-    competitorB: competitors[1],
+    competitorA,
+    competitorB,
   };
 }
 
