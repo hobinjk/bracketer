@@ -6,7 +6,6 @@ import {
   competitors as competitorsTable,
   results as resultsTable,
   Outcome,
-  brackets
 } from '../schema.ts';
 import { eq } from 'drizzle-orm';
 

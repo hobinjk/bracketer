@@ -11,6 +11,7 @@ export const brackets = sqliteTable('brackets', {
   id: t.int().primaryKey({ autoIncrement: true }),
   name: t.text().notNull(),
 });
+export type Bracket = typeof brackets.$inferSelect;
 
 export const competitors = sqliteTable('competitors', {
   id: t.int().primaryKey({ autoIncrement: true }),
@@ -18,6 +19,7 @@ export const competitors = sqliteTable('competitors', {
   name: t.text().notNull(),
   elo: t.real().notNull(),
 });
+export type Competitor = typeof competitors.$inferSelect;
 
 export const results = sqliteTable('results', {
   id: t.int().primaryKey({ autoIncrement: true }),
@@ -29,3 +31,4 @@ export const results = sqliteTable('results', {
   }).notNull(),
   notes: t.text().notNull(),
 });
+export type Result = typeof results.$inferSelect;
