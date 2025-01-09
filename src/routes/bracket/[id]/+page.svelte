@@ -2,10 +2,11 @@
   import { enhance } from '$app/forms';
   import { fly, slide } from 'svelte/transition';
   import Result from './Result.svelte';
+  import type { PageData, ActionData } from './$types';
 
   interface IProps {
-    data: any;
-    form: any;
+    data: PageData;
+    form: ActionData;
   }
 
   let { data, form }: IProps = $props();

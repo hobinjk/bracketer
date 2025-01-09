@@ -3,11 +3,11 @@
 
   import { enhance } from '$app/forms';
   import { fly, slide } from 'svelte/transition';
-  import type { Bracket } from '$lib/types';
+  import type { PageData, ActionData } from './$types';
 
   interface IProps {
-    data: { brackets: Array<Bracket> };
-    form: any;
+    data: PageData;
+    form: ActionData;
   }
 
   let { data, form }: IProps = $props();

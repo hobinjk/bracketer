@@ -1,9 +1,10 @@
 <script lang="ts">
   import { enhance } from '$app/forms';
+  import type { PageData, ActionData } from './$types';
 
   interface IProps {
-    data: any;
-    form: any;
+    data: PageData;
+    form: ActionData;
   }
   let { data, form }: IProps = $props();
 </script>
@@ -32,7 +33,7 @@
       {data.competitorB?.name} Win
     </label>
 
-    <textarea name="notes" placeholder="Notes" value={form?.notes ?? ''}></textarea>
+    <textarea name="notes" placeholder="Notes" value=""></textarea>
     <button>Submit</button>
   </form>
 </div>
